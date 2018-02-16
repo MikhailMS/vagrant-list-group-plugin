@@ -22,7 +22,7 @@ module ListGroup
       prefix_splitter = ""
       if name.include?("-")
         prefix_splitter = "-"
-      elsif name.include("_")
+      elsif name.include?("_")
         prefix_splitter = "_"
       else
         raise ListGroup::CommandError, "In order to split boxes into groups, it box name should have '-' or '_' after group prefix, ie [prefix-name]" 
