@@ -7,10 +7,10 @@ module ListGroup
         box_name = entry.split(" ")[0]                   # entry.split returns ['box name', 'status', 'provider']
         provider = entry.split(" ")[2]
         if get_group_prefix(box_name).eql? group_prefix
-          @env.ui.info Vagrant::List::VMInfo.new(box_name, provider).inspect 
+          @env.ui.info ListGroup::VMInfo.new(box_name, provider).inspect 
         else
           @env.ui.info "\n======\n[-- #{group_prefix.upcase} boxes --]\n"
-          @env.ui.info Vagrant::List::VMInfo.new(box_name, provider).inspect
+          @env.ui.info ListGroup::VMInfo.new(box_name, provider).inspect
         end
         group_prefix = get_group_prefix(box_name) 
       end
