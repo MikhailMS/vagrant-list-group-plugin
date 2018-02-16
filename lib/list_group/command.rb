@@ -4,30 +4,30 @@ module ListGroup
       @env.ui.info "Current machine states:\n"
       group_prefix = ""
       ListGroup::VirtualBox::List.all.each do |entry|
-        box_name = entry.split(" ")[0]                   # entry.split returns ['box name', 'status', 'provider']
+      	box_name = entry.split(" ")[0]                   # entry.split returns ['box name', 'status', 'provider']
+	state    = entry.split(" ")[1] 
         provider = entry.split(" ")[2]
         if get_group_prefix(box_name).eql? group_prefix
-          @env.ui.info ListGroup::VMInfo.new(box_name, provider).inspect 
+          @env.ui.info ListGroup::VMInfo.new(box_name, state, provider).inspect 
         else
-          @env.ui.info "\n======\n[-- #{group_prefix.upcase} boxes --]\n"
-          @env.ui.info ListGroup::VMInfo.new(box_name, provider).inspect
+	  group_prefix = get_group_prefix(box_name)
+	  @env.ui.info "======\n[-- #{group_prefix.upcase} boxes --]\n"
+          @env.ui.info ListGroup::VMInfo.new(box_name, state, provider).inspect
         end
-        group_prefix = get_group_prefix(box_name) 
       end
     end
 
     private
 
     def get_group_prefix(name)
-      prefix_splitter = ""
       if name.include?("-")
-        prefix_splitter = "-"
+	return name.split("-")[0]
       elsif name.include?("_")
-        prefix_splitter = "_"
+	return name.split("_")[0]
       else
         raise ListGroup::CommandError, "In order to split boxes into groups, it box name should have '-' or '_' after group prefix, ie [prefix-name]" 
+        return name.split(prefix_splitter)[0]
       end
-      return name.split(prefix_splitter)[0]
     end
   end
 end

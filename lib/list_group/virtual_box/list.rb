@@ -19,6 +19,9 @@ module ListGroup
         raw.map! do |line|
           next "" if line =~ /Current/i
           next "" if line =~ /VM/
+	  next "" if line =~ /suspend/i
+	  next "" if line =~ /halt/i
+	  next "" if line =~ /vagrant up/i
           next line if true
         end.compact  
         raw -= [""]

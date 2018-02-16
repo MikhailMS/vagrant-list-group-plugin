@@ -8,12 +8,13 @@ module ListGroup
     attr_accessor :uuid
     attr_accessor :name
     attr_accessor :guest_os
-    attr_accessor :state
+    attr_accessor :box_state
     
     attr_accessor :provider
 
-    def initialize(name, provider)
+    def initialize(name, state, provider)
       self.raw = `VBoxManage showvminfo #{name}`
+      self.box_state = state
       self.provider = provider
       process!
     end
@@ -22,7 +23,7 @@ module ListGroup
     # Public - Override inspect to display
     # vm attributes
     def inspect
-      "#{name}      [#{state} (#{provider})] :(#{guest_os}):"
+      "#{name}      [#{box_state} (#{provider})] :(#{guest_os}):"
     end
 
     private
