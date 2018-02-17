@@ -13,17 +13,25 @@ module ListGroup
     attr_accessor :provider
 
     def initialize(name, state, provider)
-      self.raw = `VBoxManage showvminfo #{name}`
-      self.box_state = state
-      self.provider = provider
-      process!
+      if state.eql?("not")
+        self.name = name
+        self.box_state = "#{state} created"
+        self.provider = provider
+        self.guest_os = "UNKNOWN"
+      else
+        self.raw = `VBoxManage showvminfo #{name}`
+        self.box_state = state
+        self.provider = provider
+        process!
+      end
     end
 
 
     # Public - Override inspect to display
     # vm attributes
     def inspect
-      "#{name}      [#{box_state} (#{provider})] :(#{guest_os}):"
+      state_provider = "[#{box_state} #{provider}]"
+      "#{name.ljust(35, ' ')} #{state_provider.ljust(35, ' ')} [VM OS <-- #{guest_os}]"
     end
 
     private
