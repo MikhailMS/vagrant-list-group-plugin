@@ -23,6 +23,28 @@ module ListGroup
         max_name_length = machine.name.length if machine.name.length > max_name_length
       end
       
+      # Build hash of machines, to sort by name
+      # machines = nil
+      # with_target_vms(argv) do |machine|
+      #   machines[:machine.name] = machine
+      # end
+
+      # machines.sort.to_h
+      # group_prefix = ""
+      # machine.name                     --> name of the VM,  ie test-machine
+      # machine.box.name                 --> guest OS,        ie Centos-7.2
+      # machine.state.short_description  --> state of the VM, ie running 
+      # with_target_vms(argv) do |machine|
+      #   box_name = machine.name.to_s      
+      #   if get_group_prefix(box_name).eql? group_prefix
+      #     @env.ui.info ListGroup::VMInfo.new(box_name, machine.state.short_description, machine.provider_name, machine.box.name, max_name_length).inspect 
+      #   else
+      #     group_prefix = get_group_prefix(box_name)
+      #     @env.ui.info "\n======\n[-- #{group_prefix.upcase} boxes --]"
+      #     @env.ui.info ListGroup::VMInfo.new(box_name, machine.state.short_description, machine.provider_name, machine.box.name, max_name_length).inspect
+      #   end
+      # end
+
       group_prefix = ""
       # machine.name                     --> name of the VM,  ie test-machine
       # machine.box.name                 --> guest OS,        ie Centos-7.2
