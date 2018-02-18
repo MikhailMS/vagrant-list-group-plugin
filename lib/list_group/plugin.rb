@@ -14,7 +14,7 @@ end
 
 module ListGroup
   class Plugin < Vagrant.plugin("2")
-    name "List"
+    name "list-group command"
     description <<-DESC
     This plugin is an extension for `vagrant status`, returning list of boxes split into groups by prefix
     DESC
